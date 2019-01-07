@@ -1,0 +1,51 @@
+drop table users;
+drop table team;
+drop table event;
+drop table winner;
+Drop table normal;
+drop table volunteer;
+drop table manager;
+drop table admin;
+
+Create table users(userid varchar2(20) primary key,name varchar2(25) not null,gender varchar2(25) not null check(Gender in('male','female','other')),contactno number not null UNIQUE check(length(Contactno)=10),enrollno varchar2(10) not null,emailid varchar2(25) not null UNIQUE,clgid varchar2(25) not null,teamid varchar2(10) default null,usertype varchar2(25) not null check(usertype in ('NORMAL','VOLUNTEER','MANAGER','ADMIN')),username varchar2(25) not null UNIQUE,password varchar2(10) not null check(length(password)>=8));
+
+Create table team(teamid varchar2(10) primary key,eventid varchar2(10),foreign key(eventid) references event(eventid),teamsize number(1) not null check(teamsize<=5),payment varchar2(5) not null check(payment in ('YES','NO')));
+
+Create table event(eventid varchar2(20) primary key,eventname varchar2(25) not null,organisingdept varchar2(10) not null check(organisingdept in ('IT','CS','ECE','EEE','MCT','MECH') ),managerid varchar2(20) not null,Pamount number(3) not null,etypeid varchar2(20) not null check(etypeid in('technical','non-technical')));
+
+Create table winner(WinnerId varchar2(10) primary key,eventid varchar2(20) not null,foreign key(eventid) references event(eventid),teamid varchar2(10) not null,foreign key(teamid) references team(teamid),position number not null  check(position in(1,2,3)));
+
+Create table normal(userid varchar2(20) primary key,username varchar2(25)not null UNIQUE,password varchar2(10)not null check(length(password)>=8));
+
+Create table volunteer(userid varchar2(20) primary key,username varchar2(25)not null UNIQUE,password varchar2(10)not null check(length(password)>=8));
+
+Create table manager(userid varchar2(20) primary key,username varchar2(25)not null UNIQUE,password varchar2(10)not null check(length(password)>=8));
+
+Create table admin(userid varchar2(20) primary key,username varchar2(25)not null UNIQUE,password varchar2(10)not null check(length(password)>=8));
+
+
+insert into users values('uS001','priyanka','female',9876543210,'en001','16eucs100@skcet.ac.in','c003','','ADMIN','priyanka','12345678');
+insert into users values('uS002','rohit','male',1234567890,'en002','16euit095@skcet.ac.in','c002','t001','NORMAL','rohit','12345678');
+insert into users values('uS003','ram','male',1357986420,'en003','16euee189@skcet.ac.in','c001','','VOLUNTEER','ram','12345678');
+insert into users values('uS004','suresh','male',1256903478,'en004','16tuec048@skct.edu.in','c002','t001','NORMAL','suresh','12345678');
+insert into users values('uS005','sathya','female',9753124680,'en005','16tuee166@skct.edu.in','c001','','MANAGER','sathya','12345678');
+
+insert into event values('e001','hacking','IT','u005',500,'technical');
+insert into event values('e002','singing','ECE','u005',300,'non-technical');
+
+insert into team values('t001','e001',2,'YES');
+
+insert into winner values('w001','e001','t001',1);
+
+select * from users;
+select * from event;
+select * from team;
+select * from winner;
+
+insert into Normal values(1,'priya','1234567890');
+insert into Volunteer values(1,'priya','1234567890');
+insert into Manager values(1,'priya','1234567890');
+
+DESC Normal;
+DESC User1;
+
